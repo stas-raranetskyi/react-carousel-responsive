@@ -8,7 +8,9 @@ npm install --save react-carousel-responsive
 
 <!-- [https://stas-raranetskyi.github.io/react-rating-scale/](https://stas-raranetskyi.github.io/react-rating-scale/) -->
 
-## Usage
+### [PlayGround](https://codesandbox.io/s/autumn-leftpad-l314p)
+
+## Example
 
 ```javascript
 import React from 'react';
@@ -16,7 +18,7 @@ import Rating  from 'react-rating-scale';
 import Slider from 'react-carousel-responsive';
 import 'react-carousel-responsive/dist/styles.css';
 
-const App: React.FC = () => (
+const App = () => (
     <Slider>
         <div className="slide">1</div>
         <div className="slide">2</div>

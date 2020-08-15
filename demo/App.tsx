@@ -1,19 +1,10 @@
 import React from 'react';
-// import Slider from '../src';
-import Slider from '../dist';
-import '../src/styles.scss';
+import Slider from '../src';
+// import Slider from '../dist';
+// import '../src/styles.scss';
 
 const App: React.FC = () => (
-    <Slider
-        slidesToShow={3}
-        slidesToScroll={3}
-        beforeChange={(els1, els2) => {
-            // console.log('beforeChange', els1, els2);
-        }}
-        afterChange={(els) => {
-            // console.log('afterChange', els);
-        }}
-    >
+    <Slider>
         <div className="slide">1</div>
         <div className="slide">2</div>
         <div className="slide">3</div>

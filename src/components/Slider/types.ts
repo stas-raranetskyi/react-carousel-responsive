@@ -10,7 +10,6 @@ export interface Props {
     slidesToShow?: number; // +
     slidesToScroll?: number; // +
     speed?: number; // +
-    vertical?: boolean;
     zIndex?: number; // +
     timingFunction?: 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'linear' | 'step-start' | 'step-end' | 'steps' | 'cubic-bezier'; // +
     breakpoint?: any;
