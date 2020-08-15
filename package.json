@@ -1,0 +1,57 @@
+{
+  "name": "react-carousel-responsive",
+  "version": "0.0.18",
+  "description": "responsive carousel for react",
+  "main": "./dist",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "npm run clear && cross-env NODE_ENV=production webpack --mode production",
+    "build-dec": "npm run build && tsc --emitDeclarationOnly",
+    "tsc": "tsc",
+    "clear": "rm -rf ./dist"
+  },
+  "keywords": [
+    "react-carousel",
+    "responsive-carousel",
+    "responsive-react-carousel",
+    "react-slider",
+    "slider",
+    "responsive-slider",
+    "carousel"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stas-raranetskyi/react-carousel-responsive"
+  },
+  "author": "Stas Raranetskyi",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-typescript": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/react": "^16.8.24",
+    "@types/react-dom": "^16.0.5",
+    "@types/webpack": "4.1.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.2.1",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^6.2.1",
+    "tslint": "^6.1.3",
+    "tslint-immutable": "^6.0.1",
+    "typescript": "^3.4.3",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {}
+}

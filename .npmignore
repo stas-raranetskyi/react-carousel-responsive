@@ -1,0 +1,12 @@
+webpack.config*
+src
+docs
+demo
+node_modules
+.babelrc
+package-lock.json
+tsconfig.json
+.editorconfig
+.gitignore
+tslint.json
+.babelrc

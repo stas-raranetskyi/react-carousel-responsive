@@ -1,0 +1,15 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.slide {
+    height: 150px;
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+}

@@ -1,0 +1,24 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "env": {
+        "node": true,
+        "commonjs": true
+    },
+    "jsRules": {},
+    "rules": {
+        "no-console": false,
+        "no-var-requires": false,
+        "quotemark": [true, "single", "jsx-double"],
+        "max-line-length": [
+            true,
+            {
+              "limit": 150,
+              "ignore-pattern": "^import [^,]+ from |^export | implements"
+            }
+        ]
+    },
+    "rulesDirectory": []
+}

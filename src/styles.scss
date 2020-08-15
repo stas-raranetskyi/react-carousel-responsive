@@ -1,0 +1,70 @@
+.react-carousel-responsive__ {
+    &root{
+        display: block;
+        position: relative;
+    }
+    &track {
+        display: block;
+        position: relative;
+        transition: left 0.5s ease;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    &inner {
+        position: relative;
+    }
+    &slide {
+        display: inline-block;;
+    }
+    &pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    &paginationItem{
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+        background-color: #bbb;
+        cursor: pointer;
+        &Active {
+            background-color: #717171;
+        }
+    }
+    &control {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        outline: none;
+        z-index: 1;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        width: auto;
+        padding: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+        font-weight: bold;
+        font-size: 18px;
+        transition: background-color 0.6s ease;
+        border: 0;
+        background-color: rgba(0,0,0,0.1);
+        &:hover {
+            color: white;
+            background-color: rgba(0,0,0,0.8);
+        }
+        &Prev {
+            left: 0;
+            border-radius: 0 3px 3px 0;
+        }
+        &Next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+    }
+}
