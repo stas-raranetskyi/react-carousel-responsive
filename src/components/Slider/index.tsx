@@ -3,6 +3,7 @@ import { Props, defaultProps } from './types';
 import { CLASS_NAME_PREFIX } from '../../consts';
 import { useInterval, normilizeFunction, debounce } from '../../helpers';
 
+let busy = false;
 const Slider: React.FC<Props> = (props) => {
     const settings = {
         ...defaultProps,
@@ -10,31 +11,18 @@ const Slider: React.FC<Props> = (props) => {
     }
     const childrenCount = props.children.length;
     const [activeSlide, setActiveSlide] = useState<number>(0);
+    const [withoutAnimation, setWithoutAnimation] = useState<boolean>(false);
     const [hover, setHover] = useState<boolean>(false);
     const [autoplay, setAutoplay] = useState<number | null>(settings.autoplay ? settings.autoplaySpeed : null);
     settings.slidesToScroll = Math.min(settings.slidesToScroll, settings.slidesToShow);
+    const shift = settings.slidesToShow;
 
     const beforeChange = normilizeFunction(settings.beforeChange);
     const afterChange = normilizeFunction(settings.afterChange);
 
-    const getCountToEnd = (index: number) => {
-        return childrenCount - (index * settings.slidesToScroll + settings.slidesToShow);
-    }
-
-    const getCounter = (dir: number = 1) => {
-        const diff = getCountToEnd(activeSlide);
-        if (diff < settings.slidesToScroll && dir > 0) {
-            return diff / settings.slidesToScroll;
-        }
-        const integer = Math.floor(activeSlide) - activeSlide;
-        const res = integer !== 0 ? integer * -1 : 0;
-        return res !== 0 ? res : 1;
-    }
-
     const getVisibleElementsIndex = (index: number = activeSlide) => {
-        const isEnd = getCountToEnd(index) === 0;
-        const start = isEnd ? childrenCount - settings.slidesToScroll : Math.ceil(index) * settings.slidesToScroll;
-        const end = isEnd ? childrenCount : start + settings.slidesToShow;
+        const start = index + shift;
+        const end = start + settings.slidesToShow;
         return { start, end };
     }
 
@@ -44,25 +32,48 @@ const Slider: React.FC<Props> = (props) => {
         return Array.from(slides).slice(visibles.start, visibles.end);
     }
 
-    const move = (newActiveSlide: number) => {
-        beforeChange(getVisibleElements(), getVisibleElements(newActiveSlide));
+    const changeBoundaries = (activeIndex: number) => {
+        let newActiveIndex = activeIndex;
+        if (activeIndex < 0) {
+            newActiveIndex = childrenCount + activeIndex;
+        }
+        else if (activeIndex + settings.slidesToShow > childrenCount) {
+            const diff = activeIndex + settings.slidesToShow - childrenCount;
+            newActiveIndex = diff - settings.slidesToShow;
+        }
+        if (newActiveIndex !== activeIndex) {
+            setWithoutAnimation(true);
+            setActiveSlide(newActiveIndex);
+            setTimeout(() => {
+                setWithoutAnimation(false);
+                busy = false;
+            }, 50)
+        } else {
+            busy = false;
+        }
+        afterChange(getVisibleElements(newActiveIndex));
+    }
+
+    const changeActiveFrame = (amount: number) => {
+        if (busy) {
+            return;
+        }
+        busy = true;
+        const newActiveSlide = activeSlide + (settings.slidesToScroll * amount);
+        beforeChange(getVisibleElements());
         setActiveSlide(newActiveSlide);
-        afterChange(getVisibleElements(newActiveSlide));
         if (settings.autoplay === true && !autoplay && !hover) {
             setAutoplay(settings.autoplaySpeed);
         }
+        debounce(changeBoundaries, settings.speed)(newActiveSlide);
     }
 
     const prev = () => {
-        move(Math.max(activeSlide - getCounter(-1), 0));
+        changeActiveFrame(-1);
     }
 
     const next = () => {
-        if (getCounter() === 0) {
-            setAutoplay(null);
-            return;
-        }
-        move(activeSlide + getCounter());
+        changeActiveFrame(1);
     }
 
     const getWidthChild = () => {
@@ -70,7 +81,7 @@ const Slider: React.FC<Props> = (props) => {
     }
 
     const getPosition = () => {
-        return `${(-activeSlide * 100 / settings.slidesToShow) * settings.slidesToScroll}%`;
+        return `${(-(activeSlide + shift) * getWidthChild())}%`;
     }
 
     useInterval(next, autoplay);
@@ -85,33 +96,16 @@ const Slider: React.FC<Props> = (props) => {
         setHover(false);
     }
 
-    const getPagiontaion = () => {
-        const pagionation = [];
-        const length = Math.ceil(childrenCount / settings.slidesToShow);
-        for (let i = 0; i < length; i++) {
-            pagionation.push(<div
-                className={[
-                    `${CLASS_NAME_PREFIX}paginationItem`,
-                    i === Math.ceil(activeSlide) ? `${CLASS_NAME_PREFIX}paginationItemActive` : null
-                ].join(' ')}
-                key={i}
-                onClick={goToSilde(i)}
-            />);
-        }
-        return pagionation;
-    }
-
-    const goToSilde = (index: number) => () => {
-        const diff = childrenCount - (index * settings.slidesToScroll);
-        if (diff < settings.slidesToScroll) {
-            index = (index - 1) + diff / settings.slidesToScroll;
-        }
-        move(index);
-    }
-
     const getSlides = () => {
+        const prevChildren = [...props.children].slice(0, shift);
+        const nextChildren = [...props.children].slice(childrenCount - shift, childrenCount);
+        const children = [
+            ...nextChildren,
+            ...props.children,
+            ...prevChildren,
+        ];
         const visibles = getVisibleElementsIndex();
-        return props.children.map((child, i) => {
+        return children.map((child, i) => {
             return (
                 <div
                     className={[
@@ -129,7 +123,7 @@ const Slider: React.FC<Props> = (props) => {
     }
 
     const resize = () => {
-        console.log(111);
+        // console.log(111);
     }
 
     useEffect(() => {
@@ -151,11 +145,13 @@ const Slider: React.FC<Props> = (props) => {
             <div className={`${CLASS_NAME_PREFIX}inner`}>
                 <button onClick={prev} className={[`${CLASS_NAME_PREFIX}control`, `${CLASS_NAME_PREFIX}controlPrev`].join(' ')}>❮</button>
                 <div
-                    className={`${CLASS_NAME_PREFIX}track`}
+                    className={[
+                        `${CLASS_NAME_PREFIX}track`,
+                        withoutAnimation ? `${CLASS_NAME_PREFIX}withoutAnimation` : null,
+                    ].join(' ')}
                     style={{
-                        // width: `${getWidthInner()}%`,
                         left: getPosition(),
-                        transitionDuration: `${settings.speed}s`,
+                        transitionDuration: `${settings.speed / 1000}s`,
                         transitionTimingFunction: `${settings.timingFunction}s`,
                     }}
                 >
@@ -163,7 +159,6 @@ const Slider: React.FC<Props> = (props) => {
                 </div>
                 <button onClick={next} className={[`${CLASS_NAME_PREFIX}control`, `${CLASS_NAME_PREFIX}controlNext`].join(' ')}>❯</button>
             </div>
-            <div className={`${CLASS_NAME_PREFIX}pagination`}>{getPagiontaion()}</div>
         </div>
     );
 };

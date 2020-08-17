@@ -4,8 +4,6 @@ export interface Props {
     children: ReactNode[]; // +
     autoplay?: boolean; // +
     autoplaySpeed?: number; // +
-    infinite?: boolean;
-    lazyLoad?: boolean;
     pauseOnHover?: boolean; // +
     slidesToShow?: number; // +
     slidesToScroll?: number; // +
@@ -14,7 +12,7 @@ export interface Props {
     timingFunction?: 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'linear' | 'step-start' | 'step-end' | 'steps' | 'cubic-bezier'; // +
     breakpoint?: any;
     afterChange?(currentSlides: HTMLDivElement[]): void; // +-
-    beforeChange?(currentSlides: HTMLDivElement[], nextSlides: HTMLDivElement[]): void; // +-
+    beforeChange?(currentSlides: HTMLDivElement[]): void; // +-
 }
 
 export const defaultProps = {
@@ -22,9 +20,9 @@ export const defaultProps = {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 5000,
     pauseOnHover: true,
     zIndex: 100,
-    speed: 0.5,
+    speed: 500,
     timingFunction: 'ease',
 }

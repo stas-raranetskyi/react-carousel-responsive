@@ -45,7 +45,7 @@ slidesToShow | number | 1 | How many slides to show in one frame
 slidesToScroll | number | 1 | How many slides to scroll at once
 speed | number | 500 | Animation speed in milliseconds
 timingFunction | string | ease |
-beforeChange(currentSlides: HTMLDivElement[], nextSlides: HTMLDivElement[]) | func | - | callback function before frame scroll
+beforeChange(currentSlides: HTMLDivElement[]) | func | - | callback function before frame scroll
 afterChange(currentSlides: HTMLDivElement[]) | func | - | callback function after frame scroll
 
 ## Author
