@@ -4,7 +4,7 @@ import Slider from '../src';
 // import '../src/styles.scss';
 
 const App: React.FC = () => (
-    <Slider slidesToShow={3} slidesToScroll={1}>
+    <Slider slidesToShow={1} slidesToScroll={1}>
         <div className="slide">1</div>
         <div className="slide">2</div>
         <div className="slide">3</div>

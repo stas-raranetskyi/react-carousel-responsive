@@ -8,7 +8,7 @@ npm install --save react-carousel-responsive
 
 <!-- [https://stas-raranetskyi.github.io/react-rating-scale/](https://stas-raranetskyi.github.io/react-rating-scale/) -->
 
-### [PlayGround](https://codesandbox.io/s/autumn-leftpad-l314p)
+### [PlayGround](https://codesandbox.io/s/react-responsive-carousel-4tiwv)
 
 ## Example
 
