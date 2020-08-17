@@ -1,6 +1,6 @@
 {
   "name": "react-carousel-responsive",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "responsive carousel for react",
   "main": "./dist",
   "scripts": {
