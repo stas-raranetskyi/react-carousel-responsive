@@ -16,6 +16,8 @@ const Slider: React.FC<Props> = (props) => {
     const [autoplay, setAutoplay] = useState<number | null>(settings.autoplay ? settings.autoplaySpeed : null);
     settings.slidesToScroll = Math.min(settings.slidesToScroll, settings.slidesToShow);
     const shift = settings.slidesToShow;
+    const [originalX, setOriginalX] = useState<number>(0);
+    const threshold = 10;
 
     const beforeChange = normilizeFunction(settings.beforeChange);
     const afterChange = normilizeFunction(settings.afterChange);
@@ -60,6 +62,7 @@ const Slider: React.FC<Props> = (props) => {
         }
         busy = true;
         const newActiveSlide = activeSlide + (settings.slidesToScroll * amount);
+        console.log(activeSlide);
         beforeChange(getVisibleElements());
         setActiveSlide(newActiveSlide);
         if (settings.autoplay === true && !autoplay && !hover) {
@@ -69,10 +72,12 @@ const Slider: React.FC<Props> = (props) => {
     }
 
     const prev = () => {
+        console.log('prev');
         changeActiveFrame(-1);
     }
 
     const next = () => {
+        console.log('next');
         changeActiveFrame(1);
     }
 
@@ -126,6 +131,26 @@ const Slider: React.FC<Props> = (props) => {
         // console.log(111);
     }
 
+    const onTouchStart = (e: any) => {
+        const touch = e.changedTouches[0];
+        const current = parseInt(touch.screenX, 10);
+        setOriginalX(current);
+    }
+
+    const onTouchEnd = (e: any) => {
+        const touch = e.changedTouches[0];
+        const delta = parseInt(touch.screenX, 10) - originalX;
+
+        if (Math.abs(delta) > threshold) {
+            if (delta > 0) prev();
+            if (delta < 0) next();
+        }
+
+        setOriginalX(0);
+    }
+
+    // console.log(activeSlide);
+
     useEffect(() => {
         window.addEventListener('resize', debounce(resize));
         return () => {
@@ -154,6 +179,8 @@ const Slider: React.FC<Props> = (props) => {
                         transitionDuration: `${settings.speed / 1000}s`,
                         transitionTimingFunction: `${settings.timingFunction}s`,
                     }}
+                    onTouchStart={onTouchStart}
+                    onTouchEnd={onTouchEnd}
                 >
                     {getSlides()}
                 </div>

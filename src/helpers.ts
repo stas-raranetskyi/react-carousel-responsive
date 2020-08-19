@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useInterval = (callback: any, delay: number | null) => {
     const savedCallback: any = useRef();
@@ -28,7 +28,6 @@ export const normilizeFunction = (fn: any) => {
         }
     };
 };
-
 
 export const debounce = (fn: any, delay: number = 200) => {
     let timeout: any = null;
