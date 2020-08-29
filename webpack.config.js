@@ -3,14 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
+const isDemo = process.env.NODE_ENV === 'demo';
 const entryFolder = isProd ? 'src' : 'demo';
 
 module.exports = {
     entry: `./${entryFolder}/index`,
     output: {
-        path: path.join(__dirname, '/dist'),
+        path: isDemo ? path.join(__dirname, '/docs') : path.join(__dirname, '/dist'),
         filename: 'index.js',
-        libraryTarget: isProd ? 'commonjs2' : undefined
+        libraryTarget: isProd && !isDemo ? 'commonjs2' : undefined
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -41,7 +42,7 @@ module.exports = {
             },
         ]
     },
-    plugins: isProd ? [
+    plugins: isProd && !isDemo ? [
         new MiniCssExtractPlugin({
             filename: 'styles.css'
         })
@@ -53,7 +54,7 @@ module.exports = {
             filename: 'styles.css'
         })
     ],
-    externals: isProd ? [
+    externals: isProd && !isDemo ? [
         // nodeExternals(),
         {
           react: {

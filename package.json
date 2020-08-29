@@ -5,10 +5,10 @@
   "main": "./dist",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot --host 0.0.0.0",
-    "build": "npm run clear && cross-env NODE_ENV=production webpack --mode production",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "build-demo": "cross-env NODE_ENV=demo webpack --mode production",
     "build-dec": "npm run build && tsc --emitDeclarationOnly",
-    "tsc": "tsc",
-    "clear": "rm -rf ./dist"
+    "tsc": "tsc"
   },
   "keywords": [
     "react-carousel",

@@ -62,7 +62,6 @@ const Slider: React.FC<Props> = (props) => {
         }
         busy = true;
         const newActiveSlide = activeSlide + (settings.slidesToScroll * amount);
-        console.log(activeSlide);
         beforeChange(getVisibleElements());
         setActiveSlide(newActiveSlide);
         if (settings.autoplay === true && !autoplay && !hover) {
@@ -72,12 +71,10 @@ const Slider: React.FC<Props> = (props) => {
     }
 
     const prev = () => {
-        console.log('prev');
         changeActiveFrame(-1);
     }
 
     const next = () => {
-        console.log('next');
         changeActiveFrame(1);
     }
 
@@ -148,8 +145,6 @@ const Slider: React.FC<Props> = (props) => {
 
         setOriginalX(0);
     }
-
-    // console.log(activeSlide);
 
     useEffect(() => {
         window.addEventListener('resize', debounce(resize));
