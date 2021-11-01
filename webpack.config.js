@@ -11,19 +11,23 @@ module.exports = {
     output: {
         path: isDemo ? path.join(__dirname, '/docs') : path.join(__dirname, '/dist'),
         filename: 'index.js',
-        libraryTarget: isProd && !isDemo ? 'commonjs2' : undefined
+        clean: true,
+        libraryTarget: isProd && !isDemo ? 'umd' : undefined
+    },
+    devServer: {
+        open: true,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
-    devtool: 'declaration-map',
+    devtool: 'source-map',
     module: {
         rules: [
             {
                 test: /\.(ts|js)x?$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'ts-loader'
                 },
             },
             {
@@ -55,20 +59,19 @@ module.exports = {
         })
     ],
     externals: isProd && !isDemo ? [
-        // nodeExternals(),
         {
-          react: {
-            root: 'React',
-            commonjs2: 'react',
-            commonjs: 'react',
-            amd: 'react'
-          },
-          'react-dom': {
-            root: 'ReactDOM',
-            commonjs2: 'react-dom',
-            commonjs: 'react-dom',
-            amd: 'react-dom'
-          }
+            react: {
+                root: 'React',
+                commonjs2: 'react',
+                commonjs: 'react',
+                amd: 'react'
+            },
+            'react-dom': {
+                root: 'ReactDOM',
+                commonjs2: 'react-dom',
+                commonjs: 'react-dom',
+                amd: 'react-dom'
+            }
         }
     ] : []
 };
