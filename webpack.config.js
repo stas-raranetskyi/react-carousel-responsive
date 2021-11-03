@@ -12,7 +12,7 @@ module.exports = {
         path: isDemo ? path.join(__dirname, '/docs') : path.join(__dirname, '/dist'),
         filename: 'index.js',
         clean: true,
-        libraryTarget: isProd && !isDemo ? 'umd' : undefined
+        libraryTarget: isProd && !isDemo ? 'commonjs2' : undefined
     },
     devServer: {
         open: true,

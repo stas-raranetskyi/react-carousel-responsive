@@ -5,3 +5,4 @@ coverage/
 public/
 .env
 package-lock.json
+.DS_Store
